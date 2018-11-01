@@ -1,7 +1,7 @@
 sudo: required
 language: python
 python:
-  - "3.6"
+  - "3.6    "
 install:
   - pip install flake8
 services:
@@ -12,4 +12,4 @@ before_script:
 
 script:
   - flake8 .
-  - docker run chorfy/app /bin/sh -c "python manage.py test"
+  - docker run chorfy/app /bin/sh -c "python manage.py test --testrunner=chorfy.core.test_runners.NoDbTestRunner"
