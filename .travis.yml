@@ -1,10 +1,15 @@
 sudo: required
 language: python
+python:
+  - "3.7"
+install:
+  - pip install flake8
 services:
   - docker
 
-before_install:
+before_script:
   - docker build -t chorfy/app ./app
 
 script:
+  - flake8 .
   - docker run chorfy/app /bin/sh -c "python manage.py test"
