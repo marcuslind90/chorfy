@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nyt="http://www.nytimes.com/namespaces/rss/2.0" version="2.0">
+  <channel>
+    <title>NYT &gt; U.S.</title>
+    <link>https://www.nytimes.com/section/us?partner=rss&amp;emc=rss</link>
+    <atom:link rel="self" type="application/rss+xml" href="http://www.nytimes.com/services/xml/rss/nyt/US.xml"/>
+    <description/>
+    <language>en-us</language>
+    <copyright>Copyright 2018  The New York Times Company</copyright>
+    <lastBuildDate>Sat, 03 Nov 2018 06:20:34 GMT </lastBuildDate>
+    <image>
+      <title>NYT &gt; U.S.</title>
+      <url>https://static01.nyt.com/images/misc/NYT_logo_rss_250x40.png</url>
+      <link>https://www.nytimes.com/section/us?partner=rss&amp;emc=rss</link>
+    </image>
+    <item>
+      <title>Dianne Feinstein, Out of Touch? Not Liberal Enough? She Begs to Differ</title>
+      <link>https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2018/11/01/us/00feinstein-01/00feinstein-01-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>Senator Dianne Feinstein in Whitewater Preserve, Calif., last week. At the age of 85, she is running what will likely be her last campaign.</media:description>
+      <media:credit>Jim Wilson/The New York Times</media:credit>
+      <description>Despite murmurs of opposition from her own party, Senator Dianne Feinstein of California is in a dominant position in her campaign for Senate.</description>
+      <dc:creator>ADAM NAGOURNEY</dc:creator>
+      <pubDate>Fri, 02 Nov 2018 19:00:57 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Democratic Party</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Senate Committee on the Judiciary</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Feinstein, Dianne</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Elections, Senate</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/mdes">Age, Chronological</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">de Leon, Kevin</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">California</category>
+    </item>
+    <item>
+      <title>Man Shoots 6 at Florida Yoga Studio, Killing 2 and Then Himself</title>
+      <link>https://www.nytimes.com/2018/11/02/us/tallahasee-shooting-yoga-florida.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2018/11/02/us/tallahasee-shooting-yoga-florida.html</guid>
+      <atom:link rel="standout" href="https://www.nytimes.com/2018/11/02/us/tallahasee-shooting-yoga-florida.html?partner=rss&amp;emc=rss"/>
+      <media:content url="https://static01.nyt.com/images/2018/11/03/autossell/03XP-YOGASHOOTING02/03XP-YOGASHOOTING02-moth.jpg" medium="image" height="151" width="151"/>
+      <media:description>The police investigating the scene of a shooting at a yoga studio on Friday, in Tallahassee, Fla.</media:description>
+      <media:credit>Steve Cannon/Associated Press</media:credit>
+      <description>The police in Tallahassee said they did not know the motive the shooting, which happened about the time a yoga class was to be held.</description>
+      <dc:creator>JACEY FORTIN</dc:creator>
+      <pubDate>Sat, 03 Nov 2018 02:37:14 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Murders, Attempted Murders and Homicides</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Gillum, Andrew</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Tallahassee (Fla)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Hot Yoga Tallahassee</category>
+    </item>
+    <item>
+      <title>On the First Shabbat After Pittsburgh Attack, &#x2018;We&#x2019;re Here to Be Jewish Together&#x2019;</title>
+      <link>https://www.nytimes.com/2018/11/02/us/shabbat-pittsburgh-shooting.html?partner=rss&amp;emc=rss</link>
+      <guid isPermaLink="true">https://www.nytimes.com/2018/11/02/us/shabbat-pittsburgh-shooting.html</guid>
+      <atom:link href="https://www.nytimes.com/2018/11/02/us/shabbat-pittsburgh-shooting.html?partner=rss&amp;emc=rss" rel="standout"/>
+      <media:content url="https://static01.nyt.com/images/2018/11/03/reader-center/03shabbat1/03shabbat1-moth-v2.jpg" medium="image" height="151" width="151"/>
+      <media:description>The first Sabbath since the shooting in Pittsburgh at Rodef Shalom congregation on Friday night.</media:description>
+      <media:credit>Hilary Swift for The New York Times</media:credit>
+      <description>Less than a week after the Pittsburgh shooting killed 11 people attending Shabbat services, synagogues across the country are expecting packed congregations.</description>
+      <dc:creator>CAMPBELL ROBERTSON, JENNIFER MEDINA and JACK HEALY</dc:creator>
+      <pubDate>Sat, 03 Nov 2018 04:40:36 GMT</pubDate>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Jews and Judaism</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Religion and Belief</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_org_all">Tree of Life (Pittsburgh, Pa, Synagogue)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_geo">Pittsburgh (Pa)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Synagogues</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/des">Pittsburgh, Pa, Shooting (2018)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_per">Myers, Jeffrey (Rabbi)</category>
+      <category domain="http://www.nytimes.com/namespaces/keywords/nyt_keyword">Shabbat</category>
+    </item>
+  </channel>
+</rss>
