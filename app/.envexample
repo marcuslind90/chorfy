@@ -1,0 +1,4 @@
+RDS_DB_NAME=postgres
+RDS_USERNAME=postgres
+RDS_HOSTNAME=db
+RDS_PORT=5432

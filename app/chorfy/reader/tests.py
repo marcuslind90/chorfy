@@ -27,19 +27,16 @@ class ReaderTestCase(TestCase):
         bulk_create.assert_called_once()
 
     def test_add_article(self):
-        self.reader.get_keywords = Mock()
-        self.reader.get_keywords.return_value = ["mocked", ]
         article = self.reader.add_article(item=self.reader.data.entries[0])
         target = Article(
             title="Dianne Feinstein, Out of Touch? Not Liberal Enough? She Begs to Differ",  # noqa
             summary="Despite murmurs of opposition from her own party, Senator Dianne Feinstein of California is in a dominant position in her campaign for Senate.",  # noqa
-            keywords=["mocked", ],
             source="https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html?partner=rss&emc=rss"  # noqa
         )
 
         self.assertEqual(
-            [article.title, article.summary, article.keywords, article.source],
-            [target.title, target.summary, target.keywords, target.source],
+            [article.title, article.summary, article.source],
+            [target.title, target.summary, target.source],
         )
 
     def test_get_keywords(self):
@@ -75,3 +72,6 @@ class ReaderTestCase(TestCase):
                 "countri", "go", "kid",
             ])
         )
+
+    def test_get_source(self):
+        pass

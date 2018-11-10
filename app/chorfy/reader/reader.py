@@ -22,10 +22,12 @@ class Reader(object):
         article = Article(
             title=item.title,
             summary="".join([content.value for content in item.content]),
-            keywords=self.get_keywords(title=item.title),
             source=item.link,
         )
         return article
+
+    def get_source(self, article):
+        pass
 
     def get_keywords(self, title: str):
         """Get keywords from the title
