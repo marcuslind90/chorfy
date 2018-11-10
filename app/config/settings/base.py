@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Local Apps
     'chorfy.core',
     'chorfy.reader',
+    'chorfy.frontend',
 ]
 
 MIDDLEWARE = [
