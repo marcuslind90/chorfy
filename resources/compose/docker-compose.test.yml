@@ -10,4 +10,4 @@ services:
       - RDS_PORT=5432
     ports:
       - "8000:8000"
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: /app/utils/wait-for-it.sh localhost:5432 -- bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
