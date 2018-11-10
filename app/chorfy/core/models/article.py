@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from taggit.managers import TaggableManager
 
 
@@ -17,6 +18,7 @@ class Article(models.Model):
     summary = models.TextField(blank=True, null=True)
     source = models.URLField()
     categories = models.ManyToManyField("core.Category")
+    published_at = models.DateTimeField(default=now)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

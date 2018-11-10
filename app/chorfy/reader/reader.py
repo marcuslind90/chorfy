@@ -1,5 +1,6 @@
 import feedparser
 import nltk
+from dateutil import parser as dateparser
 from datetime import timedelta
 from django.utils.timezone import now
 from chorfy.core.models import Article, Story
@@ -37,6 +38,7 @@ class Reader(object):
         article = Article(
             title=item.title,
             source=source,
+            published_at=dateparser.parse(item.published),
         )
         if getattr(item, "content", None):
             article.summary = "".join(
