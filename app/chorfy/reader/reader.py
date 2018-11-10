@@ -29,6 +29,13 @@ class Reader(object):
         return "".join(url.split("?")[:1])
 
     def _add_article(self, item):
+        """Take a parser RSS item and adds it as an Article.
+
+        Arguments:
+            item {object} -- Item from RSS feed
+
+        Returns:
+        """
         # Check if article from this source already exists.
         source = self._clean_url(item.link)
         exists = Article.objects.filter(source=source).count() > 0
@@ -80,6 +87,15 @@ class Reader(object):
         return Story.objects.create()
 
     def _filter_similar_articles(self, article: Article, compare: Article):
+        """Filter handler to determine if an article is similar or not.
+
+        Arguments:
+            article {Article} -- Article we're filtering
+            compare {Article} -- Article we are comparing to
+
+        Returns:
+            bool -- If article should be filtered out or not.
+        """
         limit = article.tags.count()//3
         if article.similar_tags >= limit and \
            article.created_at >= now()-timedelta(days=2):
