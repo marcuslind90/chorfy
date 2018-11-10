@@ -1,5 +1,7 @@
 import feedparser
 import nltk
+from datetime import timedelta
+from django.utils.timezone import now
 from chorfy.core.models import Article
 
 
@@ -11,23 +13,50 @@ class Reader(object):
         self.data = feedparser.parse(source)
 
     def save(self):
-        articles = []
         for entry in self.data.entries:
-            article = self.add_article(item=entry)
-            articles.append(article)
-
-        Article.objects.bulk_create(articles)
+            self.add_article(item=entry)
 
     def add_article(self, item):
-        article = Article(
+        article = Article.objects.create(
             title=item.title,
             summary="".join([content.value for content in item.content]),
             source=item.link,
         )
+        article.tags.add(*self.get_keywords(title=item.title))
+
         return article
 
-    def get_source(self, article):
-        pass
+    def get_story(self, article):
+        """Get the story of the most similar article
+
+        Similar articles are determined by comparing the tags, and if they
+        share more than 1/3 of tags, they're considered similar.
+
+        Arguments:
+            article {Article} -- The article we want to find similar story of
+
+        Returns:
+            Story -- The story that this article is part of
+        """
+        # Get similar Articles by tag, sorted by most similar descending.
+        similar = article.tags.similar_objects()
+        similar = list(filter(
+            lambda item: self.filter_similar_articles(
+                article=item, compare=article
+            ),
+            similar
+        ))
+        if not similar:
+            return None
+        return similar[0].story
+
+    def filter_similar_articles(self, article: Article, compare: Article):
+        limit = article.tags.count()//3
+        if article.similar_tags >= limit and \
+           article.created_at >= now()-timedelta(days=2):
+            return True
+        else:
+            return False
 
     def get_keywords(self, title: str):
         """Get keywords from the title

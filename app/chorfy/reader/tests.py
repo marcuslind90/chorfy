@@ -1,7 +1,8 @@
 import os
+from datetime import timedelta
 from django.test import TestCase
-from unittest.mock import Mock, call, patch
-from chorfy.core.models import Article
+from unittest.mock import Mock, call
+from chorfy.core.models import Article, Story
 from .reader import Reader
 
 
@@ -11,8 +12,7 @@ class ReaderTestCase(TestCase):
         file = open(os.path.dirname(__file__) + "/mocks/rss.xml")
         self.reader = Reader(source=file.read())
 
-    @patch("chorfy.reader.reader.Article.objects.bulk_create")
-    def test_save(self, bulk_create):
+    def test_save(self):
         """
         Test that save method calls add_article for each entry.
         """
@@ -24,7 +24,6 @@ class ReaderTestCase(TestCase):
             call(item=entry1), call(item=entry2), call(item=entry3)
         ]
         self.reader.add_article.assert_has_calls(expected_calls)
-        bulk_create.assert_called_once()
 
     def test_add_article(self):
         article = self.reader.add_article(item=self.reader.data.entries[0])
@@ -73,5 +72,37 @@ class ReaderTestCase(TestCase):
             ])
         )
 
-    def test_get_source(self):
-        pass
+    def test_get_story(self):
+        story = Story.objects.create()
+
+        # Create base article that we want to find story of.
+        foo = Article.objects.create(
+            title="foo",
+            summary="foo",
+            source="http://foo.com",
+            story=None,
+        )
+        foo.tags.add(*["a", "b", "c", "d", ])
+
+        # Create new, partial match article.
+        bar = Article.objects.create(
+            title="bar",
+            summary="bar",
+            source="http://bar.com",
+            story=story,
+        )
+        bar.tags.add(*["a", "b", "e", "f", "g", ])
+
+        # Create perfect match article, but old.
+        old = Article.objects.create(
+            title="old",
+            summary="old",
+            source="http://old.com",
+            story=None,
+        )
+        old.tags.add(*["a", "b", "c", "d", ])
+        old.created_at -= timedelta(days=10)
+        old.save()
+
+        res = self.reader.get_story(article=foo)
+        self.assertEqual(res, story)
