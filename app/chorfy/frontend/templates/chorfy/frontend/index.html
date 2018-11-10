@@ -1,0 +1,10 @@
+<h1>News</h1>
+
+{% for story in stories %}
+    <ul>
+    {% for article in story.articles.all %}
+        <li>{{article.title}}</li>
+    {% endfor %}
+    </ul>
+    <hr>
+{% endfor %}
