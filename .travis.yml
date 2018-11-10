@@ -2,16 +2,12 @@ sudo: required
 language: python
 python:
   - "3.6"
-env:
-  - RDS_DB_NAME=postgres
-  - RDS_USERNAME=postgres
-  - RDS_HOSTNAME=db
-  - RDS_PORT=5432
 services:
   - docker
 
 before_script:
-  - docker-compose up -d
+  - docker build -t chorfy/app ./app
+  - docker-compose up -f resources/compose/docker-compose.test.yml -d
 
 script:
   - docker-compose exec app /bin/sh -c "python -m flake8 ."
