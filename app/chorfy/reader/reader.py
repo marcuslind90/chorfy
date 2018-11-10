@@ -2,7 +2,7 @@ import feedparser
 import nltk
 from datetime import timedelta
 from django.utils.timezone import now
-from chorfy.core.models import Article
+from chorfy.core.models import Article, Story
 
 
 class Reader(object):
@@ -23,6 +23,8 @@ class Reader(object):
             source=item.link,
         )
         article.tags.add(*self.get_keywords(title=item.title))
+        article.story = self.get_story(article=article)
+        article.save()
 
         return article
 
@@ -31,6 +33,7 @@ class Reader(object):
 
         Similar articles are determined by comparing the tags, and if they
         share more than 1/3 of tags, they're considered similar.
+        If no similar articles are found, create and retunr a new story.
 
         Arguments:
             article {Article} -- The article we want to find similar story of
@@ -46,9 +49,11 @@ class Reader(object):
             ),
             similar
         ))
-        if not similar:
-            return None
-        return similar[0].story
+        if similar:
+            return similar[0].story
+
+        # If no similar articles were found, create a new story.
+        return Story.objects.create()
 
     def filter_similar_articles(self, article: Article, compare: Article):
         limit = article.tags.count()//3
