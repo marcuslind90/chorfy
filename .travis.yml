@@ -12,5 +12,5 @@ before_script:
   - docker-compose -f resources/compose/docker-compose.test.yml up -d
 
 script:
-  - docker-compose exec app /bin/sh -c "python -m flake8 ."
-  - docker-compose exec app /bin/sh -c "python manage.py test --no-input"
+  - docker-compose -f resources/compose/docker-compose.test.yml exec app /bin/sh -c "python -m flake8 ."
+  - docker-compose -f resources/compose/docker-compose.test.yml exec app /bin/sh -c "python manage.py test --no-input"
