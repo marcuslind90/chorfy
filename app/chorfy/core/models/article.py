@@ -13,7 +13,7 @@ class Article(models.Model):
         on_delete=models.CASCADE,
         related_name="articles"
     )
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
     summary = models.TextField()
     source = models.URLField()
     categories = models.ManyToManyField("core.Category")
@@ -21,3 +21,6 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     tags = TaggableManager()
+
+    def __str__(self):
+        return self.title

@@ -16,17 +16,17 @@ class ReaderTestCase(TestCase):
         """
         Test that save method calls add_article for each entry.
         """
-        self.reader.add_article = Mock()
+        self.reader._add_article = Mock()
         self.reader.save()
 
         entry1, entry2, entry3 = self.reader.data.entries
         expected_calls = [
             call(item=entry1), call(item=entry2), call(item=entry3)
         ]
-        self.reader.add_article.assert_has_calls(expected_calls)
+        self.reader._add_article.assert_has_calls(expected_calls)
 
     def test_add_article(self):
-        article = self.reader.add_article(item=self.reader.data.entries[0])
+        article = self.reader._add_article(item=self.reader.data.entries[0])
         target = Article(
             title="Dianne Feinstein, Out of Touch? Not Liberal Enough? She Begs to Differ",  # noqa
             summary="Despite murmurs of opposition from her own party, Senator Dianne Feinstein of California is in a dominant position in her campaign for Senate.",  # noqa
@@ -43,7 +43,7 @@ class ReaderTestCase(TestCase):
         Test that expected results are returned from get_keywords
         """
         title = self.reader.data.entries[0].title
-        keywords = self.reader.get_keywords(title=title)
+        keywords = self.reader._get_keywords(title=title)
         self.assertTrue(
             all(word in keywords for word in [
                 "dianne", "feinstein", "liberal", "beg"
@@ -55,7 +55,7 @@ class ReaderTestCase(TestCase):
         Test that Locations are getting included in Keywords.
         """
         title = "Uppsala, Sweden is a beautiful city."
-        keywords = self.reader.get_keywords(title=title)
+        keywords = self.reader._get_keywords(title=title)
         self.assertTrue(
             all(word in keywords for word in ["uppsala", "sweden", ])
         )
@@ -65,7 +65,7 @@ class ReaderTestCase(TestCase):
         Test that words are getting stemmed in to their base form.
         """
         title = "Kids are going out in the countries"
-        keywords = self.reader.get_keywords(title=title)
+        keywords = self.reader._get_keywords(title=title)
         self.assertTrue(
             all(word in keywords for word in [
                 "countri", "go", "kid",
@@ -104,5 +104,5 @@ class ReaderTestCase(TestCase):
         old.created_at -= timedelta(days=10)
         old.save()
 
-        res = self.reader.get_story(article=foo)
+        res = self.reader._get_story(article=foo)
         self.assertEqual(res, story)

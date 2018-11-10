@@ -14,21 +14,26 @@ class Reader(object):
 
     def save(self):
         for entry in self.data.entries:
-            self.add_article(item=entry)
+            self._add_article(item=entry)
 
-    def add_article(self, item):
-        article = Article.objects.create(
+    def _add_article(self, item):
+        article = Article(
             title=item.title,
-            summary="".join([content.value for content in item.content]),
             source=item.link,
         )
-        article.tags.add(*self.get_keywords(title=item.title))
-        article.story = self.get_story(article=article)
+        if getattr(item, "content", None):
+            article.summary = "".join(
+                [content.value for content in item.content]
+            )
+
+        article.save()
+        article.tags.add(*self._get_keywords(title=item.title))
+        article.story = self._get_story(article=article)
         article.save()
 
         return article
 
-    def get_story(self, article):
+    def _get_story(self, article):
         """Get the story of the most similar article
 
         Similar articles are determined by comparing the tags, and if they
@@ -44,7 +49,7 @@ class Reader(object):
         # Get similar Articles by tag, sorted by most similar descending.
         similar = article.tags.similar_objects()
         similar = list(filter(
-            lambda item: self.filter_similar_articles(
+            lambda item: self._filter_similar_articles(
                 article=item, compare=article
             ),
             similar
@@ -55,7 +60,7 @@ class Reader(object):
         # If no similar articles were found, create a new story.
         return Story.objects.create()
 
-    def filter_similar_articles(self, article: Article, compare: Article):
+    def _filter_similar_articles(self, article: Article, compare: Article):
         limit = article.tags.count()//3
         if article.similar_tags >= limit and \
            article.created_at >= now()-timedelta(days=2):
@@ -63,7 +68,7 @@ class Reader(object):
         else:
             return False
 
-    def get_keywords(self, title: str):
+    def _get_keywords(self, title: str):
         """Get keywords from the title
 
         Use NLTK to determine which words in the title are important
@@ -105,7 +110,8 @@ class Reader(object):
         for subtree in chunk.subtrees(filter=lambda t: t.label() in ent_types):
             for leaf in subtree.leaves():
                 keywords.add(leaf[0])
-                words.remove(leaf[0])
+                if leaf[0] in words:
+                    words.remove(leaf[0])
 
         # Add remaining words in list and stem them to base form,
         # stemming means we change words from e.g. "eating" to "eat".
