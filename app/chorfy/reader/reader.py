@@ -1,9 +1,13 @@
 import feedparser
 import nltk
+import logging
 from dateutil import parser as dateparser
 from datetime import timedelta
 from django.utils.timezone import now
 from chorfy.core.models import Article, Story
+
+
+logger = logging.getLogger(__name__)
 
 
 class Reader(object):
@@ -15,7 +19,10 @@ class Reader(object):
 
     def save(self):
         for entry in self.data.entries:
-            self._add_article(item=entry)
+            if self._validate_item(item=entry):
+                self._add_article(item=entry)
+            else:
+                logger.info(f"{entry.link} failed validation.")
 
     def _clean_url(self, url):
         """Strips any GET params from url
@@ -27,6 +34,51 @@ class Reader(object):
             str -- URL stripped of get params
         """
         return "".join(url.split("?")[:1])
+
+    def _validate_item(self, item):
+        """
+        Validate values of an item.
+        """
+        try:
+            self._validate_item_required_attrs(item=item)
+            self._validate_item_link(item=item)
+        except ValueError as ex:
+            logger.info(str(ex))
+            return False
+
+        return True
+
+    def _validate_item_required_attrs(self, item):
+        """Validate that required attribute is set on item.
+
+        Arguments:
+            item {object} -- RSS Item
+
+        Raises:
+            ValueError -- Rasied if validation fails
+
+        Returns:
+            bool -- Return True if validation succeeds.
+        """
+        if not getattr(item, "title", None):
+            raise ValueError("Required attribute title is not set.")
+
+        if not getattr(item, "published", None):
+            raise ValueError("Required attribute published is not set.")
+
+        if not getattr(item, "link", None):
+            raise ValueError("Required attribute link is not set.")
+
+        return True
+
+    def _validate_item_link(self, item):
+        """
+        Validate the item.link attribute.
+        """
+        if len(item.link) > 255:
+            raise ValueError("item.link length too long.")
+
+        return True
 
     def _add_article(self, item):
         """Take a parser RSS item and adds it as an Article.
@@ -96,7 +148,7 @@ class Reader(object):
         Returns:
             bool -- If article should be filtered out or not.
         """
-        limit = article.tags.count()//3
+        limit = article.tags.count()//5
         if article.similar_tags >= limit and \
            article.created_at >= now()-timedelta(days=2):
             return True

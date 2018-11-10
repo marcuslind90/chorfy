@@ -16,7 +16,7 @@ class Article(models.Model):
     )
     title = models.CharField(max_length=255)
     summary = models.TextField(blank=True, null=True)
-    source = models.URLField()
+    source = models.URLField(max_length=255)
     categories = models.ManyToManyField("core.Category")
     published_at = models.DateTimeField(default=now)
     updated_at = models.DateTimeField(auto_now=True)
