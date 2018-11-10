@@ -7,7 +7,6 @@ services:
       - RDS_DB_NAME=travis_ci_test
       - RDS_USERNAME=postgres
       - RDS_HOSTNAME=localhost
-      - RDS_PORT=""
     ports:
       - "8000:8000"
     command: /app/utils/wait-for-it.sh localhost:5432 -- bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
