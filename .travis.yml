@@ -2,14 +2,17 @@ sudo: required
 language: python
 python:
   - "3.6"
-install:
-  - pip install flake8
+env:
+  - RDS_DB_NAME=postgres
+  - RDS_USERNAME=postgres
+  - RDS_HOSTNAME=db
+  - RDS_PORT=5432
 services:
   - docker
 
 before_script:
-  - docker build -t chorfy/app ./app
+  - docker-compose up -d
 
 script:
-  - flake8 .
-  - docker run chorfy/app /bin/sh -c "python manage.py test --testrunner=chorfy.core.test_runners.NoDbTestRunner"
+  - docker-compose exec app /bin/sh -c "python -m flake8 ."
+  - docker-compose exec app /bin/sh -c "python manage.py test --no-input"
