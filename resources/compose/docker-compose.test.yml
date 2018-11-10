@@ -4,9 +4,16 @@ services:
   app:
     image: chorfy/app
     environment:
-      - RDS_DB_NAME=travis_ci_test
+      - RDS_DB_NAME=postgres
       - RDS_USERNAME=postgres
-      - RDS_HOSTNAME=localhost
+      - RDS_HOSTNAME=db
+      - RDS_PORT=5433
     ports:
       - "8000:8000"
-    command: /app/utils/wait-for-it.sh localhost:5432 -- bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: /app/utils/wait-for-it.sh db:5433 -- bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:9.6
+    ports:
+      - "5433:5432"
