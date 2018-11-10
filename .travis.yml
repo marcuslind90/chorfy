@@ -2,6 +2,8 @@ sudo: required
 language: python
 python:
   - "3.6"
+install:
+  - pip install flake8
 services:
   - docker
   - postgresql
@@ -12,5 +14,5 @@ before_script:
   - docker-compose -f resources/compose/docker-compose.test.yml up -d
 
 script:
-  - docker-compose -f resources/compose/docker-compose.test.yml exec app /bin/sh -c "python -m flake8 ."
+  - flake8 .
   - docker-compose -f resources/compose/docker-compose.test.yml exec app /bin/sh -c "python manage.py test --no-input"
