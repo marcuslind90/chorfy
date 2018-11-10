@@ -4,8 +4,10 @@ python:
   - "3.6"
 services:
   - docker
+  - postgresql
 
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - docker build -t chorfy/app ./app
   - docker-compose -f resources/compose/docker-compose.test.yml up -d
 
