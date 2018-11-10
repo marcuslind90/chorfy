@@ -14,4 +14,4 @@ before_script:
 
 script:
   - flake8 .
-  - docker-compose -f resources/compose/docker-compose.test.yml run app /bin/sh -c "python manage.py test --no-input"
+  - docker-compose -f resources/compose/docker-compose.test.yml run app /app/utils/wait-for-it.sh localhost:5432 -- /bin/sh -c "python manage.py test --no-input"
