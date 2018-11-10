@@ -16,10 +16,27 @@ class Reader(object):
         for entry in self.data.entries:
             self._add_article(item=entry)
 
+    def _clean_url(self, url):
+        """Strips any GET params from url
+
+        Arguments:
+            url {str} -- URL we want to strip
+
+        Returns:
+            str -- URL stripped of get params
+        """
+        return "".join(url.split("?")[:1])
+
     def _add_article(self, item):
+        # Check if article from this source already exists.
+        source = self._clean_url(item.link)
+        exists = Article.objects.filter(source=source).count() > 0
+        if exists:
+            return
+
         article = Article(
             title=item.title,
-            source=item.link,
+            source=source,
         )
         if getattr(item, "content", None):
             article.summary = "".join(

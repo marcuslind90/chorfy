@@ -8,4 +8,5 @@ class Story(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.articles.all().first().title
+        article = self.articles.all().first()
+        return article.title if article else str(self.pk)

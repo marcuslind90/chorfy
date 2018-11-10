@@ -12,6 +12,13 @@ class ReaderTestCase(TestCase):
         file = open(os.path.dirname(__file__) + "/mocks/rss.xml")
         self.reader = Reader(source=file.read())
 
+    def test_clean_url(self):
+        """
+        Test that _clean_url strips all get params from URL
+        """
+        res = self.reader._clean_url("https://foo.bar?uat_source=rss")
+        self.assertEqual(res, "https://foo.bar")
+
     def test_save(self):
         """
         Test that save method calls add_article for each entry.
@@ -30,7 +37,7 @@ class ReaderTestCase(TestCase):
         target = Article(
             title="Dianne Feinstein, Out of Touch? Not Liberal Enough? She Begs to Differ",  # noqa
             summary="Despite murmurs of opposition from her own party, Senator Dianne Feinstein of California is in a dominant position in her campaign for Senate.",  # noqa
-            source="https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html?partner=rss&emc=rss"  # noqa
+            source="https://www.nytimes.com/2018/11/02/us/dianne-feinstein-senate-california.html"  # noqa
         )
 
         self.assertEqual(
